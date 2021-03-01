@@ -1,7 +1,7 @@
 import socket
 
 sock = socket.socket()
-sock.bind(('', 9090))
+sock.bind(('', 4040))
 sock.listen(1)
 
 while True:
@@ -9,8 +9,9 @@ while True:
     print('connected:', addr)
     data = conn.recv(1024)
     if data:
-        data_str = data.decode()
-        conn.send(data_str.upper().encode())
+        print(data.decode())
+        if data.decode() == 'adminadmin':
+            re_data = 'True'
+            conn.send(re_data.encode())
         conn.close()
-        if data_str == 'stop':
-            break
+
