@@ -1,15 +1,16 @@
 import socket
-sock = socket.socket()
-sock.bind(('', 8888))
-sock.listen(1)
-conn, adr = sock.accept()
 
-print('Look at this boy, who connected: ' + str(adr))
+sock = socket.socket()
+sock.bind(('', 9090))
+sock.listen(1)
 
 while True:
+    conn, addr = sock.accept()
+    print('connected:', addr)
     data = conn.recv(1024)
-    if not data:
-        break
-    conn.send(data.upper)
-
-conn.close()
+    if data:
+        data_str = data.decode()
+        conn.send(data_str.upper().encode())
+        conn.close()
+        if data_str == 'stop':
+            break
