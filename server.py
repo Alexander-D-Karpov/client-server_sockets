@@ -12,4 +12,4 @@ while True:
         break
     conn.send(data.upper)
 
-conn.close
+conn.close()
