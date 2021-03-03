@@ -1,11 +1,31 @@
 import socket
+from cryptography.fernet import Fernet
 from tkinter import *
+
+def write_key():
+    key = Fernet.generate_key()
+    with open('crypto.key', 'wb') as key_file:
+        key_file.write(key)
+
+def load_key():
+    return open('crypto.key', 'rb').read()
+
+def encrypt(filename, key):
+    f = Fernet(key)
+
 
 def login():
     logn = str(log.get()) + str(pas.get())
+    with open(filename, 'wb') as file:
+        file.write(encrypted_data)
+    write_key()
+    key = load_key()
+    file = logn.encode() 
+    encrypt(file, key)
     sock = socket.socket()
     sock.connect(('localhost', 4040))
-    sock.send(logn.encode())
+    sock.send((file))
+    sock.send((key))
     data = sock.recv(1024).decode()
     sock.close()
     if data == 'True':
