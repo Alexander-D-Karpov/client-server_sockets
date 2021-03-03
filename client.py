@@ -1,14 +1,23 @@
 import socket
 from tkinter import *
+import json
 
 def login():
-    logn = str(log.get()) + str(pas.get())
+    data = {
+    "user_data": {
+        "login": log.get(),
+        "species": pas.get()
+        }
+    }
     sock = socket.socket()
     sock.connect(('localhost', 4040))
-    sock.send(logn.encode())
-    data = sock.recv(1024).decode()
+    with open('test_file.json', 'w') as file:
+        json.dump(data, file)
+    print(test_file.json)
+    sock.send(test_file.json.encode())
+    return_data = sock.recv(1024).decode()
     sock.close()
-    if data == 'True':
+    if return_data == 'True':
             lbl.configure(text = 'Ur logged in')
             log.destroy()
             lbl1.destroy()
