@@ -1,1 +1,1 @@
-# client-server_sockets
+Client/Server for Python via sockets
