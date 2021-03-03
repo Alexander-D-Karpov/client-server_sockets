@@ -1,15 +1,18 @@
-import socket
+with open('ip.env', mode='r') as file:
+    server_ip = file.read()
+from socket import socket
 from tkinter import *
 
 def login():
     logn = str(log.get()) + str(pas.get())
     sock = socket.socket()
-    sock.connect(('localhost', 4040))
+    sock.connect((server_ip, 4040))
     sock.send(logn.encode())
     data = sock.recv(1024).decode()
     sock.close()
     if data == 'True':
             lbl.configure(text = 'Ur logged in')
+            msg = ("Hello you there!").encode('utf-8')
             log.destroy()
             lbl1.destroy()
             pas.destroy()
